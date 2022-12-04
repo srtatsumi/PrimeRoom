@@ -43,7 +43,7 @@
                       @if (!session()->has('user') && $data)
                         <ul class="rd-navbar-top-links list-unstyled">
                           <li class="right-section"><a class="text-uppercase text-ubold" href="{{route('loginPage')}}"><small>Log in</small></a></li>
-                          <li class="right-section"><a class="text-uppercase text-ubold" href=""><small>Register</small></a></li>
+                          <li class="right-section"><a class="text-uppercase text-ubold" href="{{route('register')}}"><small>Register</small></a></li>
                         </ul>
                       @endif
 
