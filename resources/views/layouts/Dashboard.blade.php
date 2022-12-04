@@ -2,7 +2,10 @@
 @section('content')
 
 <main class="page-content">
-  
+
+  @if((session()->has('s_msg')))
+  <span style="text-align: center; color: green ">{{session()->get('s_msg')}}</span>
+@endif
     <!--Section Search form-->
       <section style="margin: 5px auto;">        
         <div>
