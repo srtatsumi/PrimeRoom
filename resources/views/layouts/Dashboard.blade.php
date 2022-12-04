@@ -2,6 +2,7 @@
 @section('content')
 
 <main class="page-content">
+  
     <!--Section Search form-->
       <section style="margin: 5px auto;">        
         <div>
@@ -472,13 +473,14 @@
       </div>
     </section>
 </main>
-
-
-{{-- <script>
-  $(document).ready(function () {
-    
-  });
-</script> --}}
-
-
+<script>
+    @if(Session::has('success'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+        toastr.success("{{ session('message') }}");
+    @endif
+</script>
 @endsection

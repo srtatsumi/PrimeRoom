@@ -114,8 +114,8 @@ counter.forEach(counter =>{
 
 
 
-<script src="./js/core.min.js"></script>
-<script src="./js/script.js"></script>
+<script src="{{asset('/js/core.min.js')}}"></script>
+<script src="{{asset('/js/script.js')}}"></script>
 
 <!-- Counter Javascript  -->
 <script type="text/javascript">
@@ -253,3 +253,5 @@ _gaq.push(['_trackPageview']);
     </div>
   </footer>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PrpertyControl;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -19,11 +21,28 @@ use App\Http\Controllers\LoginController;
 Route::get('/',[LoginController::class, 'index'])->name('index');
 
 Route::get('/login',[LoginController::class, 'loginPage'])->name('loginPage');
+Route::get('/register/page',[LoginController::class, 'register'])->name('register');
+
 Route::post('/register',[LoginController::class, 'registerPage'])->name('registerPage');
 Route::post('/login',[LoginController::class, 'Login'])->name('Login');
 Route::get('/logout',[LoginController::class, 'Logout'])->name('Logout');
 
+Route::middleware(['isRoles'])->group(function () {
+    Route::get('/addPropertyForm',[PrpertyControl::class, 'addPropertyForm'])->name('addPropertyForm');
+    Route::post('/addProperty',[PrpertyControl::class, 'addProperty'])->name('addProperty');
 
+   
+});
+
+Route::middleware(['isUser'])->group(function () {
+    Route::get('/user/dasboard',[UserController::class, 'dasborad'])->name('dasborad');
+    Route::get('/user/profile',[UserController::class, 'UserProfile'])->name('userprofile');
+    Route::get('/user/contact',[UserController::class, 'Contact'])->name('contactUs');
+    Route::get('/user/membership',[UserController::class, 'Membership'])->name('membership');
+
+
+
+});
 
 
 

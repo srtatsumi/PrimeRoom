@@ -42803,3 +42803,7 @@ footer.page-footer{
 	margin-top: 35px;
 	font-weight: 500;
 }
+.abc.list-unstyled li{
+	display: flex;
+	align-items: center;
+}
