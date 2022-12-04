@@ -28,6 +28,8 @@ class LoginController extends Controller
     {
         try {
             // return $request->all();
+            // return $request->all();
+
 
             $RegisterData = [
                 
