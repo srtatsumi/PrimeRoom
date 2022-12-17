@@ -26,13 +26,17 @@ Route::get('/register/page',[LoginController::class, 'register'])->name('registe
 Route::post('/register',[LoginController::class, 'registerPage'])->name('registerPage');
 Route::post('/login',[LoginController::class, 'Login'])->name('Login');
 Route::get('/logout',[LoginController::class, 'Logout'])->name('Logout');
-// Route::get('/otp',[LoginController::class, 'otp'])->name('otp');
+// Route::get('/otp',[LoginController::class, 'otp'])->name('otp');getAllProperty
+Route::get('/getAllProperty',[LoginController::class, 'getAllProperty'])->name('getAllProperty');
+Route::get('/getPropertyDetails/{id}',[LoginController::class, 'getPropertyDetails'])->name('getPropertyDetails');
+
 
 Route::post('/checkotp',[LoginController::class, 'checkotp'])->name('checkotp');
 
 
 
 Route::middleware(['isRoles'])->group(function () {
+    Route::get('/addAdminDashboard',[PrpertyControl::class, 'addAdminDashboard'])->name('addAdminDashboard');
     Route::get('/addPropertyForm',[PrpertyControl::class, 'addPropertyForm'])->name('addPropertyForm');
     Route::post('/addProperty',[PrpertyControl::class, 'addProperty'])->name('addProperty');
 

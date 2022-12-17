@@ -14,7 +14,8 @@ class LoginController extends Controller
     public function index()
     {
         $data = 1;
-        return view('layouts.Dashboard',compact('data'));
+        $details  = DB::table('add_properties')->get();
+        return view('layouts.Dashboard',compact('data','details'));
     }
     public function loginPage()
     {
@@ -56,8 +57,7 @@ class LoginController extends Controller
     }
 
     public function Login(Request $request){
-
-        $userdata =[
+     $userdata =[
             'email' => $request->email,
             'password' => $request->password
         ];
@@ -65,12 +65,9 @@ class LoginController extends Controller
             $AuthName = Auth::user();
             $request->session()->put('user',$AuthName);  
             if ( Auth::user()->role == "buyer"){
-                
-            return redirect()->route('dasborad')->with(['userData'=>$request->session()->get('user')]);
-
+                return redirect()->route('dasborad')->with(['userData'=>$request->session()->get('user')]);
             }else {
-            return redirect()->route('addPropertyForm')->with(['userData'=>$request->session()->get('user')]);
-                
+                return redirect()->route('addAdminDashboard')->with(['userData'=>$request->session()->get('user')]);
             }
         }else{
             // return 0;
@@ -107,5 +104,11 @@ class LoginController extends Controller
             return view('layouts.otp',compact('e_msg'));
 
         }
+    }
+
+    public function getPropertyDetails($id)
+    {
+        $dd = DB::table('add_properties')->where('id',$id)->first();
+        return $dd;
     }
 }
