@@ -26,7 +26,11 @@ Route::get('/register/page',[LoginController::class, 'register'])->name('registe
 Route::post('/register',[LoginController::class, 'registerPage'])->name('registerPage');
 Route::post('/login',[LoginController::class, 'Login'])->name('Login');
 Route::get('/logout',[LoginController::class, 'Logout'])->name('Logout');
-// Route::get('/otp',[LoginController::class, 'otp'])->name('otp');getAllProperty
+// Route::get('/otp',[LoginController::class, 'otp'])->name('otp');getAllProperty  \
+Route::get('/catalog',[LoginController::class, 'catalog'])->name('catalog');
+Route::get('/about',[LoginController::class, 'about'])->name('about');
+Route::get('/contactus',[LoginController::class, 'contactus'])->name('contactus');
+
 Route::get('/getAllProperty',[LoginController::class, 'getAllProperty'])->name('getAllProperty');
 Route::get('/getPropertyDetails/{id}',[LoginController::class, 'getPropertyDetails'])->name('getPropertyDetails');
 

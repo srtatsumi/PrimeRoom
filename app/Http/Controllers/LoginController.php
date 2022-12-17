@@ -111,4 +111,22 @@ class LoginController extends Controller
         $dd = DB::table('add_properties')->where('id',$id)->first();
         return $dd;
     }
+
+    public function catalog()
+    {
+        $data = 1;
+        return view('header.catalog',compact('data'));
+    }
+    public function about()
+    {
+        $data = 1;
+        return view('header.about',compact('data'));
+    }
+    public function contactus()
+    {
+        $data = 1;
+        return view('header.contactus',compact('data'));
+    }
+    
+
 }
