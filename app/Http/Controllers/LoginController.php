@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use Auth;
+use Mail;
+use  App\Mail\SendMail;
 
 class LoginController extends Controller
 {
     public function index()
     {
         $data = 1;
-        return view('layouts.Dashboard',compact('data'));
+        $details  = DB::table('add_properties')->get();
+        return view('layouts.Dashboard',compact('data','details'));
     }
     public function loginPage()
     {
@@ -27,33 +30,34 @@ class LoginController extends Controller
     public function registerPage(Request $request)
     {
         try {
-            // return $request->all();
-            // return $request->all();
-
-
-            $RegisterData = [
-                
+            $RegisterData = [ 
                 "name"=>$request->name,
                 "email"=>$request->email,
                 "role"=>$request->role,
                 "password"=>Hash::make($request->pass)
-
             ];
-            $CheckRegister = DB::table('users')->insert($RegisterData);
+            $CheckRegister = DB::table('users')->insertGetId($RegisterData);
+            // dd($CheckRegister);
             if ($CheckRegister) {
-                
-               return redirect()->route('index');
+                $otp = mt_rand(1000, 9999);
+                $OtpInsert = DB::table('otps')->insert([
+                    "userid"=>$CheckRegister,
+                    "emailid"=>$request->email,
+                    "otp"=>$otp,
+                    "verified"=>0
+                ]);
+                $data = \Mail::to($request->email)->send(new SendMail($otp));
+                $e_msg = 0;
+                return view('layouts.otp',compact('e_msg'));
             }
         } catch (\Throwable $th) {
             throw $th;
         }
       
-        // return $request->all();
     }
 
     public function Login(Request $request){
-
-        $userdata =[
+     $userdata =[
             'email' => $request->email,
             'password' => $request->password
         ];
@@ -61,12 +65,9 @@ class LoginController extends Controller
             $AuthName = Auth::user();
             $request->session()->put('user',$AuthName);  
             if ( Auth::user()->role == "buyer"){
-                
-            return redirect()->route('dasborad')->with(['userData'=>$request->session()->get('user')]);
-
+                return redirect()->route('dasborad')->with(['userData'=>$request->session()->get('user')]);
             }else {
-            return redirect()->route('addPropertyForm')->with(['userData'=>$request->session()->get('user')]);
-                
+                return redirect()->route('addAdminDashboard')->with(['userData'=>$request->session()->get('user')]);
             }
         }else{
             // return 0;
@@ -83,4 +84,49 @@ class LoginController extends Controller
 
         }
     }
+
+
+    public function checkotp(Request $request){
+         $getOtp1 = $request->otp_1;
+         $getOtp2 = $request->otp_2;
+         $getOtp3 = $request->otp_3;
+         $getOtp4 = $request->otp_4;
+
+
+         $finalOtp = $getOtp1.$getOtp2.$getOtp3.$getOtp4;
+        $getOtpDetails = DB::table('otps')->where('otp',$finalOtp)->first();
+        if ($getOtpDetails) {
+            return redirect()->route('index')->with(["s_msg"=>"otp verified"]);
+        }else{
+
+            // return redirect()->route('index');
+            $e_msg = 1;
+            return view('layouts.otp',compact('e_msg'));
+
+        }
+    }
+
+    public function getPropertyDetails($id)
+    {
+        $dd = DB::table('add_properties')->where('id',$id)->first();
+        return $dd;
+    }
+
+    public function catalog()
+    {
+        $data = 1;
+        return view('header.catalog',compact('data'));
+    }
+    public function about()
+    {
+        $data = 1;
+        return view('header.about',compact('data'));
+    }
+    public function contactus()
+    {
+        $data = 1;
+        return view('header.contactus',compact('data'));
+    }
+    
+
 }

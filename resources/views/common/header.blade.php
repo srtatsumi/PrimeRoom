@@ -96,11 +96,11 @@
                         <ul class="rd-navbar-nav">
                           <li><a href="index.php"><span>Home</span></a>
                           </li>
-                          <li><a href="./catalog.php"><span>Browse</span></a>
+                          <li><a href="{{route('catalog')}}"><span>Browse</span></a>
                           </li>
-                          <li><a href="./about.php"><span>About</span></a>
+                          <li><a href="{{route('about')}}"><span>About</span></a>
                           </li>
-                          <li><a href="./contact.php"><span>Contact Us</span></a>
+                          <li><a href="{{route('contactus')}}"><span>Contact Us</span></a>
                           </li>
                         </ul>
                       </div>

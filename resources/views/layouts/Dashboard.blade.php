@@ -2,7 +2,10 @@
 @section('content')
 
 <main class="page-content">
-  
+
+  @if((session()->has('s_msg')))
+  <span style="text-align: center; color: green ">{{session()->get('s_msg')}}</span>
+@endif
     <!--Section Search form-->
       <section style="margin: 5px auto;">        
         <div>
@@ -118,24 +121,34 @@
       <div class="container">
         <h2 class="font-weight-bold">Recent Properties</h2>
         <hr class="divider bg-saffron">
+        @if (count($details ) == 0)
+         <p class="font-weight-bold">No Property Found</p>
+        @endif
         <div class="row">
-          <div class="col-md-6 col-lg-4"><img class="img-fluid d-inline-block" src="./images/home-img-05-370x250.jpg" width="370" height="250" alt="">
-            <div class="text-md-left offset-top-24">
-              <div>
-                <h5 class="font-weight-bold text-primary"><a href="./single-property-page.php">AVA Nob Hill</a></h5>
-              </div>
-              <!-- <h6 class="offset-top-10"> $1199.00/mon</h6> -->
-              <ul class="list-inline list-inline-dotted text-dark">
-                <li class="list-inline-item">1200 sq ft</li>
-                <li class="list-inline-item">4 bedrooms</li>
-                <li class="list-inline-item">2 bathrooms</li>
-              </ul>
-              <div>
-                <p>AVA Nob Hill includes studios and 1 and 2 bedroom apartments that feature an urban-inspired design that extends beyond your walls and throughout the entire community.</p>
+        
+        
+             @foreach ($details as $item)
+             <div class="col-md-6 col-lg-4"><img class="img-fluid d-inline-block" src="{{$item->propertyImage}}" width="370" height="250" alt="">
+              <div class="text-md-left offset-top-24">
+                <div>
+                  <h5 class="font-weight-bold text-primary"><a href="{{ url('getPropertyDetails/'.$item->id) }}">{{$item->propertyTitle}}</a></h5>
+                </div>
+                <!-- <h6 class="offset-top-10"> $1199.00/mon</h6> -->
+                <ul class="list-inline list-inline-dotted text-dark">
+                  <li class="list-inline-item">1200 sq ft</li>
+                  <li class="list-inline-item">{{$item->bedroom}} bedroom</li>
+                  <li class="list-inline-item">{{$item->bathroom}} bathroom</li>
+                </ul>
+                <div>
+                  <p>{{$item->propertyDescription}}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6 col-lg-4 offset-top-66 offset-md-top-0"><img class="img-fluid d-inline-block" src="./images/home-img-06-370x250.jpg" width="370" height="250" alt="">
+             @endforeach
+   
+       
+         
+          {{-- <div class="col-md-6 col-lg-4 offset-top-66 offset-md-top-0"><img class="img-fluid d-inline-block" src="./images/home-img-06-370x250.jpg" width="370" height="250" alt="">
             <div class="text-md-left offset-top-24">
               <div>
                 <h5 class="font-weight-bold text-primary"><a href="./single-property-page.php">Ashton San Francisco</a></h5>
@@ -214,9 +227,13 @@
                 <p>Pick your pleasure from a vantage point that puts all the best of the city's lively South Beach neighborhood within easy reach.</p>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
-        <div class="offset-top-50"><a class="btn btn-primary" href="./catalog.php">view all properties</a></div>
+        @if (count($details) == 0)
+         {{-- <p class="font-weight-bold">No Property Found</p> --}}
+        @else
+          <div class="offset-top-50"><a class="btn btn-primary" href="">view all properties</a></div>
+        @endif
       </div>
     </section>
     <!--Section Why Choose primeroom?-->
@@ -429,7 +446,8 @@
             <div class="row justify-content-sm-center offset-top-66">
               <div class="col-md-8">
                 <!-- RD Mailform-->
-                <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="wt_58887_v2/bat/rd-mailform.php">
+                <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
+                  @csrf
                   <div class="row">
                     <div class="col-xl-6">
                       <div class="form-group">
