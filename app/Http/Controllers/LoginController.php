@@ -11,6 +11,10 @@ use  App\Mail\SendMail;
 
 class LoginController extends Controller
 {
+
+
+
+    
     public function index()
     {
         $data = 1;
