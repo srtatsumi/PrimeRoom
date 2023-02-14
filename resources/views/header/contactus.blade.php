@@ -77,7 +77,8 @@
         <div class="row justify-content-sm-center">
           <div class="col-sm-10 col-lg-8">
             <!-- RD Mailform-->
-            <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="../wt_58887_v2/bat/rd-mailform.php">
+            <form class="rd-text-left" method="post" action="{{route('sendMailContactUs')}}">
+              @csrf
               <div class="row justify-content-sm-center grid-group-sm">
                 <div class="col-md-6">
                   <div class="form-group">

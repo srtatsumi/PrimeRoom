@@ -21,6 +21,13 @@ class CreateAddPropertiesTable extends Migration
             $table->string('propertyVideo');
             $table->string('number')->nullable();
             $table->string('text')->nullable();
+
+            $table->string('postcode')->nullable();
+            $table->string('road')->nullable();
+            $table->string('city')->nullable();
+
+
+            
             // $table->string('text');
             $table->string('adType')->nullable();
             $table->string('propertyType')->nullable();
@@ -29,6 +36,8 @@ class CreateAddPropertiesTable extends Migration
             $table->string('kitchen')->nullable();
             $table->string('reception')->nullable();
             $table->string('roomToRent')->nullable();
+            $table->string('rentAmount')->nullable();
+
             $table->string('room')->nullable();
             $table->string('extras')->nullable();
             $table->string('services')->nullable();
