@@ -52,6 +52,8 @@
                     @if (session()->has('user'))
                       <div class="right-side">
                         <ul class="rd-navbar-top-links list-unstyled">
+                          <li class="right-section"><a class="text-uppercase text-ubold" href="{{route('addAdminDashboard')}}"><small>Dashboard</small></a></li>
+
                           <li class="right-section"><a class="text-uppercase text-ubold" href="{{route('Logout')}}"><small>Log out</small></a></li>
                         </ul>
                       </div>
@@ -94,7 +96,7 @@
                         <!-- RD Navbar Nav-->
 
                         <ul class="rd-navbar-nav">
-                          <li><a href="index.php"><span>Home</span></a>
+                          <li><a href="/"><span>Home</span></a>
                           </li>
                           <li><a href="{{route('catalog')}}"><span>Browse</span></a>
                           </li>

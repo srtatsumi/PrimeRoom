@@ -10,29 +10,31 @@
       <section style="margin: 5px auto;">        
         <div>
             <div>
-              <form>
+              <form action="{{route('searchFilter')}}" method="post">
+                @csrf
                 <div>
                   <div>
-                    <div class="searchBars" >
+                   
+                      
+                      <div class="searchBars" >
                         <!-- <label class="search-text" for="home-tabs1-search-form-input">Search by City or Address:</label> -->
-                        <select name="#" id="" style="width:30px; margin-right:25px;">
+                        <select name="regions" id="" style="width:30px; margin-right:25px;">
                           <option value="" selected>All regions</option>
-                          <option value="">Region 1</option>
-                          <option value="">Region 2</option>
-                          <option value="">Region 3</option>
-                          <option value="">Reegion 4</option>
+                          @foreach ($details as $item)
+                          <option value="{{$item->city}}">{{$item->city}}</option>
+                          @endforeach
                         </select>
-                      <input class="search-bar" id="home-tabs1-search-form-input" type="text" name="s" autocomplete="off" placeholder="Where do you want to rent">
-                      <select name="#" id="">
-                        <option value="" selected>Room to rent</option>
-                        <option value="">Room to rent 1</option>
-                        <option value="">Room to rent 2</option>
-                        <option value="">Room to rent 3</option>
-                        <option value="">Room to rent 4</option>
-                      </select>
+                        <input class="search-bar" id="home-tabs1-search-form-input" type="text" name="s" autocomplete="off" placeholder="Where do you want to rent">
+                        <select name="roomToRent" id="">
+                          <option value="" selected>Room to rent</option>
+                          @foreach ($details as $item)
+                            <option value="{{$item->roomToRent}}">{{$item->roomToRent}}</option>
+                          @endforeach
+                        </select>
                         
-                      <button class="button" type="button" style="max-width: 120px">search</button>
-                    </div>
+                        <button class="button" type="submit" style="max-width: 120px">search</button>
+                      </div>
+                   
                   </div>
                 </div>
               </form>
@@ -438,57 +440,7 @@
     </section>
     <!--Section Real Estate Tools and Resources-->
     <section class="context-dark">
-      <div class="parallax-container" data-parallax-img="images/bg-02-1920x855.jpg">
-        <div class="parallax-content">
-          <div class="container section-98 section-md-110">
-            <h2 class="font-weight-bold">Get In Touch</h2>
-            <hr class="divider bg-saffron">
-            <div class="row justify-content-sm-center offset-top-66">
-              <div class="col-md-8">
-                <!-- RD Mailform-->
-                <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="">
-                  @csrf
-                  <div class="row">
-                    <div class="col-xl-6">
-                      <div class="form-group">
-                        <label class="form-label" for="real-estate-first-name">First name:</label>
-                        <input class="form-control" id="real-estate-first-name" type="text" name="name" data-constraints="@Required">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 offset-top-24 offset-xl-top-0">
-                      <div class="form-group">
-                        <label class="form-label" for="real-estate-last-name">Last name:</label>
-                        <input class="form-control" id="real-estate-last-name" type="text" name="last_name" data-constraints="@Required">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 offset-top-24">
-                      <div class="form-group">
-                        <label class="form-label" for="real-estate-phone">Phone:</label>
-                        <input class="form-control" id="real-estate-phone" type="text" name="phone" data-constraints="@Numeric @Required">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 offset-top-24">
-                      <div class="form-group">
-                        <label class="form-label" for="real-estate-mail">E-mail:</label>
-                        <input class="form-control" id="real-estate-mail" type="email" name="email" data-constraints="@Required @Email">
-                      </div>
-                    </div>
-                    <div class="col-xl-12 offset-top-24">
-                      <div class="form-group">
-                        <label class="form-label" for="contact-me-message">Message:</label>
-                        <textarea class="form-control" id="contact-me-message" name="message" data-constraints="@Required" style="height: 150px"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="offset-top-30 text-center">
-                    <button class="btn btn-primary" type="submit">send message</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </section>
 </main>
 <script>

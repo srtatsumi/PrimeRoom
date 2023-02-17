@@ -30,12 +30,17 @@ Route::get('/logout',[LoginController::class, 'Logout'])->name('Logout');
 Route::get('/catalog',[LoginController::class, 'catalog'])->name('catalog');
 Route::get('/about',[LoginController::class, 'about'])->name('about');
 Route::get('/contactus',[LoginController::class, 'contactus'])->name('contactus');
+Route::post('/sendMailContactUs',[LoginController::class, 'sendMailContactUs'])->name('sendMailContactUs');
+Route::post('/enquirymail',[LoginController::class, 'enquirymail'])->name('enquirymail');
+
+
 
 Route::get('/getAllProperty',[LoginController::class, 'getAllProperty'])->name('getAllProperty');
 Route::get('/getPropertyDetails/{id}',[LoginController::class, 'getPropertyDetails'])->name('getPropertyDetails');
-
+Route::post('/searchFilter',[LoginController::class, 'searchFilter'])->name('searchFilter');
 
 Route::post('/checkotp',[LoginController::class, 'checkotp'])->name('checkotp');
+Route::get('/enquiry',[LoginController::class, 'enquiry'])->name('enquiry');
 
 
 
@@ -43,6 +48,8 @@ Route::middleware(['isRoles'])->group(function () {
     Route::get('/addAdminDashboard',[PrpertyControl::class, 'addAdminDashboard'])->name('addAdminDashboard');
     Route::get('/addPropertyForm',[PrpertyControl::class, 'addPropertyForm'])->name('addPropertyForm');
     Route::post('/addProperty',[PrpertyControl::class, 'addProperty'])->name('addProperty');
+    
+
 
    
 });

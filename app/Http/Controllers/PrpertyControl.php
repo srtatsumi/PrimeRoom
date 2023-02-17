@@ -25,17 +25,20 @@ class PrpertyControl extends Controller
         // return $request->all();
         
         $file = $request->file('propertyImage');
-        
-        $destinationPath = 'uploads';
-        // $file->move($destinationPath,$file->getClientOriginalName());
-            $savedimage1 = "http:\\\\".request()->getHttpHost()."/".$file->move($destinationPath,$file->getClientOriginalName());
-        // return    $savedimage1;
+        $savedimage1 ="";
+        if ( $file) {
+            $destinationPath = 'uploads';
+            // $file->move($destinationPath,$file->getClientOriginalName());
+                $savedimage1 = "http:\\\\".request()->getHttpHost()."/".$file->move($destinationPath,$file->getClientOriginalName());
+            // return    $savedimage1;
+        }
+      
         $BodyData = [
                 "propertyTitle" => $request->propertyTitle,
                 "propertyDescription" => $request->propertyDescription,
-                // "postcode" => $request->postcode,
-                // "road" => $request->road,
-                // "city" => $request->city,
+                "postcode" => $request->postcode,
+                "road" => $request->road,
+                "city" => $request->city,
                 "adType" => $request->adType,
                 "propertyType" => $request->propertyType,
                 "bedroom" => $request->bedroom,
@@ -47,7 +50,7 @@ class PrpertyControl extends Controller
                 "extras" => json_encode($request->extras),
                 "services" => json_encode($request->services),
                 "rent" => $request->rent,
-                "roomToRent" => $request->rentAmount,
+                "rentAmount" => $request->rentAmount,
                 "billInclude" => json_encode($request->billInclude),
                 "availability" => $request->availability,
                 "minLength" => $request->minLength,
@@ -79,7 +82,7 @@ class PrpertyControl extends Controller
     {
         return DB::table('add_properties')->get();
 
-        # code...
     }
+    
 
 }

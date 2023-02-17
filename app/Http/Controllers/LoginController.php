@@ -7,28 +7,29 @@ use DB;
 use Hash;
 use Auth;
 use Mail;
+use  App\Mail\ContactUsMail;
 use  App\Mail\SendMail;
+
 
 class LoginController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $data = 1;
         $details  = DB::table('add_properties')->get();
         return view('layouts.Dashboard',compact('data','details'));
     }
-    public function loginPage()
-    {
+
+    public function loginPage(){
         $data = 0;
         return view('layouts.Auth',compact('data'));
     }
-    public function register()
-    {
+
+    public function register() {
         $data = 2;
         return view('layouts.Auth',compact('data'));
     }
-    public function registerPage(Request $request)
-    {
+
+    public function registerPage(Request $request){
         try {
             $RegisterData = [ 
                 "name"=>$request->name,
@@ -85,7 +86,6 @@ class LoginController extends Controller
         }
     }
 
-
     public function checkotp(Request $request){
          $getOtp1 = $request->otp_1;
          $getOtp2 = $request->otp_2;
@@ -106,27 +106,47 @@ class LoginController extends Controller
         }
     }
 
-    public function getPropertyDetails($id)
-    {
-        $dd = DB::table('add_properties')->where('id',$id)->first();
-        return $dd;
+    public function getPropertyDetails($id){
+        $data = DB::table('add_properties')->where('id',$id)->first();
+        // return $data;
+        return view('layouts.getPropertDetails',compact('data'));
     }
 
-    public function catalog()
-    {
+    public function catalog(){
         $data = 1;
         return view('header.catalog',compact('data'));
     }
-    public function about()
-    {
+    
+    public function about(){
         $data = 1;
         return view('header.about',compact('data'));
     }
-    public function contactus()
-    {
+
+    public function contactus(){
         $data = 1;
         return view('header.contactus',compact('data'));
     }
     
+    public function sendMailContactUs(Request $request)
+    {
+        $data = \Mail::to($request->email)->send(new ContactUsMail($request->message));
+        return redirect()->back();
+    }
+    public function searchFilter(Request $request)
+    {
+        $data = 1;
+        $details =   DB::table('add_properties')->orWhere('city',$request->regions)->orWhere('road',$request->road)->orWhere('roomToRent',$request->roomToRent)->get();
+        return view('layouts.Dashboard',compact('data','details'));
+    }
 
+    public function enquiry()
+    {
+        return view('layouts.enquiryForm');
+    }
+
+    public function enquirymail(Request $request){
+       $message = "Hello ! I want to connect with you. My personal details".$request->email.",".$request->name.",".$request->phone;
+       $data = \Mail::to($request->email)->send(new ContactUsMail($message));
+        return redirect("/");
+    }
 }
