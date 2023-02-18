@@ -114,7 +114,9 @@ class LoginController extends Controller
 
     public function catalog(){
         $data = 1;
-        return view('header.catalog',compact('data'));
+        $details  = DB::table('add_properties')->paginate(1);
+        // return ($details->getCurrentPage);
+        return view('header.catalog',compact('data','details'));
     }
     
     public function about(){
@@ -135,8 +137,14 @@ class LoginController extends Controller
     public function searchFilter(Request $request)
     {
         $data = 1;
-        $details =   DB::table('add_properties')->orWhere('city',$request->regions)->orWhere('road',$request->road)->orWhere('roomToRent',$request->roomToRent)->get();
-        return view('layouts.Dashboard',compact('data','details'));
+        if ($request->advertisementPlan) {
+            $details =   DB::table('add_properties')->orWhere('advertisementPlan',$request->advertisementPlan)->paginate(1);
+            return view('header.catalog',compact('data','details'));
+        }else{
+            $details =   DB::table('add_properties')->orWhere('city',$request->regions)->orWhere('road',$request->road)->orWhere('roomToRent',$request->roomToRent)->orWhere('advertisementPlan',$request->advertisementPlan)->get();
+            return view('layouts.Dashboard',compact('data','details'));
+        }
+       
     }
 
     public function enquiry()
