@@ -6,10 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Webup\LaravelSendinBlue\SendinBlue; // <- you need this
+use Webup\LaravelSendinBlue\SendinBlueTransport; // <- you need this
 
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
+    use SendinBlue; // <- add this trait
 
     /**
      * Create a new message instance.
