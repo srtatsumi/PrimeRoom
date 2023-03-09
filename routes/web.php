@@ -41,6 +41,10 @@ Route::post('/searchFilter',[LoginController::class, 'searchFilter'])->name('sea
 
 Route::post('/checkotp',[LoginController::class, 'checkotp'])->name('checkotp');
 Route::get('/enquiry',[LoginController::class, 'enquiry'])->name('enquiry');
+// Route::get('/membership', ,[LoginController::class, 'enquiry'])->name('user');
+Route::post('/subscription',[LoginController::class, 'subscription'])->name('subscription');
+
+
 
 
 

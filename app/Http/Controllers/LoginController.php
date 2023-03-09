@@ -35,7 +35,8 @@ class LoginController extends Controller
                 "name"=>$request->name,
                 "email"=>$request->email,
                 "role"=>$request->role,
-                "password"=>Hash::make($request->pass)
+                "password"=>Hash::make($request->pass),
+                "is_otp_verified"=>1
             ];
             $CheckRegister = DB::table('users')->insertGetId($RegisterData);
             // dd($CheckRegister);
@@ -96,7 +97,10 @@ class LoginController extends Controller
          $finalOtp = $getOtp1.$getOtp2.$getOtp3.$getOtp4;
         $getOtpDetails = DB::table('otps')->where('otp',$finalOtp)->first();
         if ($getOtpDetails) {
-            return redirect()->route('index')->with(["s_msg"=>"otp verified"]);
+
+
+             return view('layouts.subscription',compact('getOtpDetails'));
+
         }else{
 
             // return redirect()->route('index');
@@ -106,6 +110,57 @@ class LoginController extends Controller
         }
     }
 
+    public function subscription(Request $request){
+        if ($request->submit == "silver") {
+            $arr = [
+                "days"=>$request->pricingForSilver,
+                "price"=>"0",
+                "userid"=>$request->userid,
+                "subscriptionType"=>$request->submit
+            ];
+        }
+        if ($request->submit == "gold") {
+
+            if ($request->pricingForGold  == "7") {
+                $price = "4.99";
+            }
+            if ($request->pricingForGold == "14") {
+                $price = "7.99";
+            }
+            if ($request->pricingForGold == "21") {
+                $price = "9.99";
+            }
+
+            $arr = [
+                "days"=>$request->pricingForGold,
+                "price"=>$price,
+                "userid"=>$request->userid,
+                "subscriptionType"=>$request->submit
+            ];
+        }
+        if ($request->submit == "platinum") {
+           
+            if ($request->pricingForGold  == "7") {
+                $price = "9.99";
+            }
+            if ($request->pricingForGold == "14") {
+                $price = "14.99";
+            }
+            if ($request->pricingForGold == "21") {
+                $price = "19.99";
+            }
+            $arr = [
+                "days"=>$request->pricingForPlatinum,
+                "price"=>$price,
+                "userid"=>$request->userid,
+                "subscriptionType"=>$request->submit
+            ]; 
+        }
+        $createSubcription = DB::table('subscriptions')->insert($arr);
+        if( $createSubcription){
+            return redirect('/');
+        }
+    }
     public function getPropertyDetails($id){
         $data = DB::table('add_properties')->where('id',$id)->first();
         // return $data;
