@@ -45,6 +45,7 @@ Route::get('/enquiry',[LoginController::class, 'enquiry'])->name('enquiry');
 Route::post('/subscription',[LoginController::class, 'subscription'])->name('subscription');
 
 
+Route::get('/check',[LoginController::class, 'email'])->name('email');
 
 
 
@@ -63,6 +64,8 @@ Route::middleware(['isUser'])->group(function () {
     Route::get('/user/profile',[UserController::class, 'UserProfile'])->name('userprofile');
     Route::get('/user/contact',[UserController::class, 'Contact'])->name('contactUs');
     Route::get('/user/membership',[UserController::class, 'Membership'])->name('membership');
+    Route::post('/membership/update',[UserController::class, 'updatemembership'])->name('updatemembership');
+
 
 
 

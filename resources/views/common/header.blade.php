@@ -27,7 +27,6 @@
           <div class="rd-navbar-wrap">
             <nav class="rd-navbar rd-navbar-top-panel rd-navbar-light" data-lg-stick-up-offset="79px" data-md-device-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-static" data-lg-auto-height="true" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-stick-up="true">
               <div class="container">
-
                 <div class="rd-navbar-inner"> 
                   <div class="rd-navbar-top-panel">
                     <div class="left-side">
@@ -97,7 +96,7 @@
                         <!-- RD Navbar Nav-->
 
                         <ul class="rd-navbar-nav">
-                          <li><a href="/"><span>Home</span></a>
+                          <li><a href="{{route('index')}}"><span>Home</span></a>
                           </li>
                           <li><a href="{{route('catalog')}}"><span>Browse</span></a>
                           </li>
@@ -114,4 +113,3 @@
             </nav>
           </div>
         </header>
-        

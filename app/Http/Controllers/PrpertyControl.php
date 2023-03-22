@@ -60,7 +60,7 @@ class PrpertyControl extends Controller
                 "prefferedHousemateGender" =>$request->prefferedHousemateGender,
                 "group" => $request->group,
                 "advertiser" => $request->advertiser,
-                "advertisementPlan" => json_encode($request->advertisementPlan),
+                "advertisementPlan" =>($request->advertisementPlan),
                 // "submit" => $request->submit,
                 "propertyImage" => $savedimage1,
                 "propertyVideo" =>"",

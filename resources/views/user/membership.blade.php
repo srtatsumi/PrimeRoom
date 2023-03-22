@@ -27,9 +27,9 @@
       <div class="offset-md-top-66">
 
       
-        <form class=" d-flex justify-content-around" method="post" action="{{route('subscription')}}">
+        <form class=" d-flex justify-content-around" method="post" action="{{route('updatemembership')}}">
           @csrf
-          {{-- <input type="hidden" name="userid" id="userid" value="{{$getOtpDetails->userid}}"> --}}
+          <input type="hidden" name="userid" id="userid" value="{{$data->userid}}">
           <div class="membershipContainer " style="width: 350px; height: 450px;border-radius:8px; background-color: blue; padding:25px; box-shadow: 5px 7px 9px black;">
               <!-- <div class="d-flex justify-content-center"> -->
                   <h3 style="color: white; font-size: 25px; font-weight:600;text-decoration:underline;">Silver</h3>
@@ -43,7 +43,7 @@
                   </div> 
                   <div class="form-group">
                     <h4 style="color: white; font-size: 18px; font-weight:500; margin-top:25px;">Pricing : </h4>
-                    <select class="form-control bg-white" name="pricingForSilver">
+                    <select class="form-control bg-white" id="pricingForSilver" name="pricingForSilver">
                       <option value="">Choose ...</option>
                       <option value="7" {{($data->subscriptionType == "silver" && $data->days == 7 ) ? "selected" : "" }} >7 days ($0)</option>
                       <option value="14" {{($data->subscriptionType == "silver" && $data->days == 14 ) ? "selected" : "" }}>14 days ($0)</option>
@@ -68,7 +68,7 @@
                   </div>
                   <div class="form-group">
                     <h4 style="color: white; font-size: 18px; font-weight:500; margin-top:25px;">Pricing:</h4>
-                    <select class="form-control bg-white" name="pricingForGold">
+                    <select class="form-control bg-white" id="pricingForGold" name="pricingForGold">
                       <option value="">Choose...</option>
                       <option value="7" {{($data->subscriptionType == "gold" && $data->days == 7 ) ? "selected" : "" }}>7 days ($4.99)</option>
                       <option value="14"{{($data->subscriptionType == "gold" && $data->days == 14 ) ? "selected" : "" }}>14 days ($7.49)</option>
@@ -93,7 +93,7 @@
                   </div> 
                   <div class="form-group">
                     <h4 style="color: white; font-size: 18px; font-weight:500; margin-top:25px;">Pricing:</h4>
-                    <select class="form-control bg-white" name="pricingForPlatinum">
+                    <select class="form-control bg-white" id="pricingForPlatinum" name="pricingForPlatinum">
                       <option value="">Choose ...</option>
                       <option value="7"{{($data->subscriptionType == "platinum" && $data->days == 7 ) ? "selected" : "" }}>7 days ($9.99)</option>
                       <option value="14"{{($data->subscriptionType == "platinum" && $data->days == 14 ) ? "selected" : "" }}>14 days ($14.99)</option>
@@ -110,4 +110,15 @@
     </div>
   </section>
 </main>
+<script>
+  $(document).ready(function () {
+    if ($('#pricingForGold').val()) {
+        $("#pricingForSilver").closest(".membershipContainer").find("button").attr('disabled', true);
+    }
+    if ($('#pricingForPlatinum').val()) {
+        $("#pricingForGold").closest(".membershipContainer").find("button").attr('disabled', true);
+        $("#pricingForSilver").closest(".membershipContainer").find("button").attr('disabled', true);
+    }
+  });
+</script>
 @endsection

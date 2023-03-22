@@ -30,7 +30,58 @@ class UserController extends Controller
 
     public function updatemembership(Request $request)
     {
-        # code...
+
+        if ($request->submit == "silver") {
+            $arr = [
+                "days" => $request->pricingForSilver,
+                "price" => "0",
+                "userid" => $request->userid,
+                "subscriptionType" => $request->submit,
+                "subscriptionId" => 1
+            ];
+        }
+        if ($request->submit == "gold") {
+
+            if ($request->pricingForGold  == "7") {
+                $price = "4.99";
+            }
+            if ($request->pricingForGold == "14") {
+                $price = "7.99";
+            }
+            if ($request->pricingForGold == "21") {
+                $price = "9.99";
+            }
+
+            $arr = [
+                "days" => $request->pricingForGold,
+                "price" => $price,
+                "userid" => $request->userid,
+                "subscriptionType" => $request->submit,
+                "subscriptionId" => 2
+            ];
+        }
+        if ($request->submit == "platinum") {
+
+            if ($request->pricingForGold  == "7") {
+                $price = "9.99";
+            }
+            if ($request->pricingForGold == "14") {
+                $price = "14.99";
+            }
+            if ($request->pricingForGold == "21") {
+                $price = "19.99";
+            }
+            $arr = [
+                "days" => $request->pricingForPlatinum,
+                "price" => $price,
+                "userid" => $request->userid,
+                "subscriptionType" => $request->submit,
+                "subscriptionId" => 3
+            ];
+        }
+
+        $createSubcription = DB::table('subscriptions')->where('userid',$request->userid)->update($arr);
+        return redirect()->back();
         
     }
 }

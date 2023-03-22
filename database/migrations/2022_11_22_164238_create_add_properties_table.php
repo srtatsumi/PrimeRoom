@@ -55,7 +55,7 @@ class CreateAddPropertiesTable extends Migration
             $table->string('prefferedHousemateGender');
             $table->string('group')->nullable();
             $table->string('advertiser')->nullable();
-            $table->string('advertisementPlan')->nullable();
+            $table->integer('advertisementPlan')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
