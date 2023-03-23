@@ -103,10 +103,11 @@
                         <label>Name:</label>
                         <input class="form-control bg-white" id="name" type="text" name="name" >
                       </div>
-                      <div class="form-group offset-top-24">
+                      <div class="form-group offset-top-24" >
                         <label>Email:</label>
                         <input class="form-control bg-white" id="signupemail"  type="email" name="email" >
                       </div>
+                      <p style="color: red" id="alert_email">Email is already taken</p>
                       <div class="form-group offset-top-24">
                         <label>Register As:</label>
                         <select class="form-control bg-white" id="role" name="role" >
@@ -158,6 +159,28 @@
       document.getElementById("signin").disabled = false;
     }
   }
+  $(document).ready(function () {
+    $("#alert_email").hide();
+    $('#signupemail').on('focusout', function () {
+      var email = this.value;
+      $.ajax({
+        type: "get",
+        url: '/check',
+        data: {email:email},
+        success: function (response) {
+          if (response == 1) {
+            $("#alert_email").show();
+            $('#signup').prop('disabled', true);
+          }
+          if(response == 0){
+            $("#alert_email").hide();
+            $('#signup').prop('disabled', false);
+          }
+        }
+      });
+
+    });
+  });
 </script>
 
 @endsection

@@ -13,8 +13,7 @@ use  App\Mail\SendMail;
 
 class LoginController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $data = 1;
 
 
@@ -37,20 +36,17 @@ class LoginController extends Controller
         return view('layouts.Dashboard', compact('data', 'details'));
     }
 
-    public function loginPage()
-    {
+    public function loginPage(){
         $data = 0;
         return view('layouts.Auth', compact('data'));
     }
 
-    public function register()
-    {
+    public function register(){
         $data = 2;
         return view('layouts.Auth', compact('data'));
     }
 
-    public function registerPage(Request $request)
-    {
+    public function registerPage(Request $request){
         try {
             $RegisterData = [
                 "name" => $request->name,
@@ -77,8 +73,7 @@ class LoginController extends Controller
         }
     }
 
-    public function Login(Request $request)
-    {
+    public function Login(Request $request){
         $userdata = [
             'email' => $request->email,
             'password' => $request->password
@@ -96,8 +91,7 @@ class LoginController extends Controller
         }
     }
 
-    public function Logout(Request $request)
-    {
+    public function Logout(Request $request) {
         if ($request->session()->flush()) {
             return redirect("/")->with('success', 'Succesfully Log Out. ');
         } else {
@@ -105,8 +99,7 @@ class LoginController extends Controller
         }
     }
 
-    public function checkotp(Request $request)
-    {
+    public function checkotp(Request $request){
         $getOtp1 = $request->otp_1;
         $getOtp2 = $request->otp_2;
         $getOtp3 = $request->otp_3;
@@ -121,8 +114,7 @@ class LoginController extends Controller
         }
     }
 
-    public function subscription(Request $request)
-    {
+    public function subscription(Request $request){
         if ($request->submit == "silver") {
             $arr = [
                 "days" => $request->pricingForSilver,
@@ -154,13 +146,13 @@ class LoginController extends Controller
         }
         if ($request->submit == "platinum") {
 
-            if ($request->pricingForGold  == "7") {
+            if ($request->pricingForPlatinum  == "7") {
                 $price = "9.99";
             }
-            if ($request->pricingForGold == "14") {
+            if ($request->pricingForPlatinum == "14") {
                 $price = "14.99";
             }
-            if ($request->pricingForGold == "21") {
+            if ($request->pricingForPlatinum == "21") {
                 $price = "19.99";
             }
             $arr = [
@@ -179,6 +171,8 @@ class LoginController extends Controller
                 'password' => $getUserDetails->password
             ];
             $AuthName =  Auth::loginUsingId($getUserDetails->id);
+            $request->session()->put('user', Auth::user());
+
             if (Auth::user()->role == "buyer") {
                 return redirect()->route('dasborad')->with(['user' => Auth::user()]);
             } else {
@@ -186,37 +180,34 @@ class LoginController extends Controller
             }
         }
     }
-    public function getPropertyDetails($id)
-    {
+
+    public function getPropertyDetails($id){
         $data = DB::table('add_properties')->where('id', $id)->first();
         return view('layouts.getPropertDetails', compact('data'));
     }
 
-    public function catalog()
-    {
+    public function catalog(){
         $data = 1;
         // $details  = DB::table('add_properties')->paginate(2);
         $details  = DB::table('add_properties')->get();
         return view('header.catalog', compact('data', 'details'));
     }
 
-    public function about()
-    {
+    public function about(){
         $data = 1;
         return view('header.about', compact('data'));
     }
 
-    public function contactus()
-    {
+    public function contactus(){
         $data = 1;
         return view('header.contactus', compact('data'));
     }
 
-    public function sendMailContactUs(Request $request)
-    {
+    public function sendMailContactUs(Request $request){
         $data = \Mail::to($request->email)->send(new ContactUsMail($request->message));
         return redirect()->back();
     }
+
     public function searchFilter(Request $request)
     {
         $data = 1;
@@ -229,15 +220,22 @@ class LoginController extends Controller
         }
     }
 
-    public function enquiry()
-    {
+    public function enquiry(){
         return view('layouts.enquiryForm');
     }
 
-    public function enquirymail(Request $request)
-    {
+    public function enquirymail(Request $request){
         $message = "Hello ! I want to connect with you. My personal details" . $request->email . "," . $request->name . "," . $request->phone;
         $data = \Mail::to($request->email)->send(new ContactUsMail($message));
         return redirect("/");
+    }
+
+    public function email(Request $request) {
+        $checkEmail = DB::table('users')->where('email',$request->email)->first();
+        if ($checkEmail) {
+            return 1;
+        }else {
+            return 0;
+        }
     }
 }
